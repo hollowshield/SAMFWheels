@@ -3,15 +3,23 @@ InitKeyboard();
 
 while true
     pause(.1);
+    distance = brick.UltrasonicDist(2);
+    if(distance > 20)
+        brick.MoveMotor('A', 1000);
+        brick.StopMotor('D');
+        pause(.4);
+        % move right
+
+    
     bumps = brick.TouchPressed(1);
-    if (~bumps)
+    if (bumps == 0)
         brick.MoveMotor('D', 1000);
         brick.MoveMotor('A', 1000);
     else
         pause(.1);
         brick.MoveMotor('D', -1000);
         brick.MoveMotor('A', -1000);
-        pause(.5);
+        pause(.4);
         brick.StopMotor('A');
         brick.MoveMotor('D', 1000);
 
@@ -22,20 +30,6 @@ while true
 
 
     switch key
-        case 'uparrow'
-            brick.MoveMotor('D', -1000);
-            brick.MoveMotor('A', -1000);
-        case 'leftarrow'
-             brick.MoveMotor('D', -1000);
-            brick.StopMotor('A'); 
-        case 'rightarrow'
-            brick.MoveMotor('A', -1000);
-            brick.StopMotor('D');
-
-        case 'downarrow'
-            brick.MoveMotor('D', 1000);
-            brick.MoveMotor('A', 1000);
-            
         case  0
             brick.StopMotor('D');
             brick.StopMotor('A'); 
