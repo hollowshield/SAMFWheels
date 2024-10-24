@@ -1,42 +1,66 @@
-global key
+global key;
 InitKeyboard();
+hasRight = 0;
+speed = 50;
+time = (speed/50)-.2;
+
+
 
 while true
     pause(.1);
     distance = brick.UltrasonicDist(2);
-    if(distance > 20)
-        brick.MoveMotor('A', 1000);
-        brick.StopMotor('D');
-        pause(.4);
-        % move right
+    
+    
+   if (distance > 80 && hasRight==0)
+            brick.MoveMotor('AD', -speed);
+
+            pause(.8);
+       
+            brick.MoveMotor('A', speed);
+            brick.MoveMotor('D', -speed);
+            pause(time);
+            hasRight = 1;
+            
+            % move right 
+   end
+    
+    bumps = brick.TouchPressed(4);
+    if (bumps == 0)
+        brick.MoveMotor('AD', speed);
+        pause(2)
+        hasRight = 0;
 
     
-    bumps = brick.TouchPressed(1);
-    if (bumps == 0)
-        brick.MoveMotor('D', 1000);
-        brick.MoveMotor('A', 1000);
-    else
-        pause(.1);
-        brick.MoveMotor('D', -1000);
-        brick.MoveMotor('A', -1000);
-        pause(.4);
-        brick.StopMotor('A');
-        brick.MoveMotor('D', 1000);
 
+    else
+        % move left
+        pause(.1);
+
+        brick.MoveMotor('AD', -speed);
+        pause(1);
+
+  
+            
+        brick.MoveMotor('A', -speed);
+        brick.MoveMotor('D', speed);
+        pause(time);
+     
 
     end
-
 
 
 
     switch key
-        case  0
-            brick.StopMotor('D');
-            brick.StopMotor('A'); 
         case 'q'
-
+            brick.StopAllMotors();
             break;
+        
+            
     end
 end
+
+
+
+
 CloseKeyboard();
     
