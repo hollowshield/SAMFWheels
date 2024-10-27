@@ -1,4 +1,4 @@
-global key;
+global key
 InitKeyboard();
 hasRight = 0;
 speed = 50;
