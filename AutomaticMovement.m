@@ -12,25 +12,29 @@ while true
     
     
    if (distance > 60 && hasRight==0)
-
-            pause(.5);
+                
+            
             brick.MoveMotor('A', speed-10);
             brick.MoveMotor('D', -speed+10);
-            pause(.35/4);
+            pause(.7);
             hasRight = 1;
            
             
             % move right 
    end
-    
+   if hasRight == 1
+       brick.MoveMotor('A', speed+3);
+       brick.MoveMotor('D', speed);
+       pause(2);
+   end
     bumps = brick.TouchPressed(4);
     if (bumps == 0)
-        pause(1)
         distance = brick.UltrasonicDist(2);
         if (distance <  15)
             brick.MoveMotor('A', speed);
             brick.MoveMotor('D', speed+2);
             distance = brick.UltrasonicDist(2);
+            disp('Left');
             % drift left
         end
         if (distance < 30 && distance > 20)
@@ -42,6 +46,7 @@ while true
         else 
                 brick.MoveMotor('A', speed+3);
                 brick.MoveMotor('D', speed);
+                disp('Center');
                 % centerish
         end
 
@@ -49,7 +54,7 @@ while true
 
 
 
-        pause(2)
+        
         hasRight = 0;
 
     
@@ -63,7 +68,7 @@ while true
             
         brick.MoveMotor('A', -speed);
         brick.MoveMotor('D', speed);
-        pause(.45);
+        pause(.7);
      
 
     end
