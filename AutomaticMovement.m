@@ -14,7 +14,7 @@ while true
    if (distance >= 50 && hasRight==0)
                 
             
-        rightTurn(brick,speed,distance, hasRight);
+        rightTurn(brick,speed);
         
         forward(brick,speed,speed);
         pause(2);
@@ -24,34 +24,38 @@ while true
    end
    
 
-    bumps = brick.TouchPressed(4);
+    pressed = brick.TouchPressed(1);
     
-    if (bumps == 0)  
-        distance = brick.UltrasonicDist(2);
-        if (distance >=30 && distance < 50)
-            forward(distance,brick,speed+2,speed);
-        end
-        if (distance <=20)
-            forward(distance,brick,speed-3,speed);
-        end
-        if (distance > 20 && distance <30)
-            forward(distance,brick,speed,speed);
-        end
-        hasRight = 0;
+    
+      
+    if (distance >=20 && distance < 50)
+        forward(brick,speed+4,speed-4);
+        disp("right");
+        
+    end
+    if (distance <=15)
+        forward(brick,speed-1,speed);
+        disp("left");
+        
+    end
+    
+    forward(brick,speed,speed);
+    
+    hasRight = 0;
 
 
-    else
+    if (pressed == 1)
         leftTurn(brick,speed);
-
+        disp(pressed);
     end
 
     
 
 
-    switch key
-        case 'q'
+    if key == 'q'
             brick.StopAllMotors();
-            distance = brick.UltrasonicDist(2);
+            disp(pressed);
+            disp(distance);
 
             break;
         
@@ -64,7 +68,7 @@ function forward( brick,speed1,speed2)
          
     brick.MoveMotor('A', speed1+3);
     brick.MoveMotor('D', speed2);
-    disp('Center');
+    
                 
         
 end
@@ -80,7 +84,7 @@ function leftTurn(brick,speed)
         brick.MoveMotor('D', speed);
         pause(.7);
 end
-function rightTurn(brick,speed,distance, hasRight)
+function rightTurn(brick,speed)
         brick.MoveMotor('A', speed-10);
         brick.MoveMotor('D', -speed+10);
         pause(1.05);
@@ -88,6 +92,8 @@ function rightTurn(brick,speed,distance, hasRight)
 
 
 end
+
+
 
 CloseKeyboard();
     
