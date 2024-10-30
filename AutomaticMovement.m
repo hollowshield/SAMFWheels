@@ -16,7 +16,7 @@ while true
             
         rightTurn(brick,speed,distance, hasRight);
         
-        forward(distance,brick,speed);
+        forward(brick,speed,speed);
         pause(2);
         hasRight = 1;
             
@@ -28,7 +28,15 @@ while true
     
     if (bumps == 0)  
         distance = brick.UltrasonicDist(2);
-        forward(distance,brick,speed);
+        if (distance >=30 && distance < 50)
+            forward(distance,brick,speed+2,speed);
+        end
+        if (distance <=20)
+            forward(distance,brick,speed-3,speed);
+        end
+        if (distance > 20 && distance <30)
+            forward(distance,brick,speed,speed);
+        end
         hasRight = 0;
 
 
@@ -52,29 +60,13 @@ while true
 end
 
 
-function forward(distance, brick,speed)
+function forward( brick,speed1,speed2)
+         
+    brick.MoveMotor('A', speed1+3);
+    brick.MoveMotor('D', speed2);
+    disp('Center');
+                
         
-        % drift left
-        if (distance <  15)
-            brick.MoveMotor('A', speed);
-            brick.MoveMotor('D', speed+2);
-            
-            disp('Left');
-           
-        end
-        %drift right
-        if (distance < 30 && distance > 20)
-                brick.MoveMotor('A', speed+7);
-                brick.MoveMotor('D', speed);
-                disp('Right');
-                
-        % centerish       
-        else 
-                brick.MoveMotor('A', speed+3);
-                brick.MoveMotor('D', speed);
-                disp('Center');
-                
-        end
 end
 
 
