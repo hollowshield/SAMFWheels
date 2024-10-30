@@ -2,22 +2,23 @@ global key
 InitKeyboard();
 hasRight = 0;
 speed = 50;
-
+brick.SetColorMode(3, 4);
 
 
 
 while true
 
    distance = brick.UltrasonicDist(2);
-    
+   color_rgb = brick.ColorRGB(3);
+
    % move right  
-   if (distance >= 50 && hasRight==0)
+   if (distance >= 60 && hasRight==0)
                 
             
         rightTurn(brick,speed);
         
         forward(brick,speed,speed);
-        pause(2);
+        pause(2.1);
         hasRight = 1;
             
            
@@ -27,23 +28,33 @@ while true
     pressed = brick.TouchPressed(1);
     
     
-      
-    if (distance >=20 && distance < 50)
-        forward(brick,speed+4,speed-4);
+    % drift  
+    if (distance >20 && distance < 30)
+        forward(brick,speed,speed-3);
         disp("right");
         
     end
-    if (distance <=15)
-        forward(brick,speed-1,speed);
+    if (distance <=20 && distance > 10)
+        forward(brick,speed-1,speed+1);
         disp("left");
         
     end
-    
-    forward(brick,speed,speed);
-    
+    if (distance >= 30)
+        forward(brick,-speed,-speed);
+        pause(.5)
+        forward(brick,speed,speed-14);
+        disp("right strong");
+    end
+    if ( distance <= 10)
+        forward(brick,-speed,-speed);
+        stopAndThink(2)
+        forward(brick,speed-5,speed);
+        pause(3)
+        disp("left strong");
+     
+    end
     hasRight = 0;
-
-
+    % drift end
     if (pressed == 1)
         leftTurn(brick,speed);
         disp(pressed);
@@ -92,7 +103,28 @@ function rightTurn(brick,speed)
 
 
 end
+function stopAndThink(time)
+    brick.StopAllMotors();
+    distance = brick.UltrasonicDist(2);
+    pause(time);
 
+end
+
+
+function adjustLeft(distance, speed, time)
+    if (distance <=20)
+        stopAndThink(2);
+
+        forward(brick,-speed+1,-speed-1);
+
+        brick.MoveMotor('A', -speed);
+        brick.MoveMotor('D', speed);
+        pause(time);
+
+        disp("left");
+        
+    end
+end
 
 
 CloseKeyboard();
