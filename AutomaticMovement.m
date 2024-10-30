@@ -15,33 +15,29 @@ while true
                 
             
         rightTurn(brick,speed,distance, hasRight);
-           
+        
+        forward(distance,brick,speed);
+        pause(2);
+        hasRight = 1;
             
            
    end
-   if hasRight == 1
-       %Checks for right turn once.
-       forward(distance,brick,speed);
-       pause(2);
-
-   end
+   
 
     bumps = brick.TouchPressed(4);
-    if (bumps == 0)
-        
+    
+    if (bumps == 0)  
         distance = brick.UltrasonicDist(2);
         forward(distance,brick,speed);
         hasRight = 0;
 
 
-    
-
     else
-        
         leftTurn(brick,speed);
 
     end
 
+    
 
 
     switch key
@@ -95,8 +91,8 @@ end
 function rightTurn(brick,speed,distance, hasRight)
         brick.MoveMotor('A', speed-10);
         brick.MoveMotor('D', -speed+10);
-        pause(.8);
-        hasRight = 1;
+        pause(1.05);
+        
 
 
 end
