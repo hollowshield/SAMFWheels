@@ -157,18 +157,21 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
     if(color_rgb(1,2) >= minGreen)
         brick.StopAllMotors();
         for i=1:3
-            brick.beep()
+            brick.beep();
+            pause(.2);
         end
-        pause(1)
+        pause(1);
         
     end
     if(color_rgb(1,3) >= minBlue)
-        for i=1:50
-            brick.StopAllMotors();
-        end
+        
+        brick.StopAllMotors();
+        
         for i=1:2
-            brick.beep()
+            brick.beep();
+            pause(0.2);
         end
+        pause(1);
     end
 end
 
