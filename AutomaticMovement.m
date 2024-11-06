@@ -31,22 +31,23 @@ while true
     pressed = brick.TouchPressed(1);
     
     
-    % drift  
-    if (distance >15 && distance < 50)
-        %forward(brick,speed,speed-3);
-        adjustRight(speed, 0.2, brick);
-        adjustLeft(speed, .2, brick);
-        
-        disp("right");
-        
-    end
-    if (distance <= 15)
-        %forward(brick,speed-1,speed+1);
-        adjustLeft(speed, .2, brick);
-        adjustRight(speed, 0.2, brick);
-        
-        disp("left");
-    end
+    % drift 
+        if (distance >15 && distance < 50)
+            colors(color_rgb, brick, minRed, minGreen, minBlue);
+            adjustRight(speed, 0.2, brick);
+            adjustLeft(speed, .2, brick);
+            
+            disp("right");
+            
+        end
+        if (distance <= 15)
+            colors(color_rgb, brick, minRed, minGreen, minBlue);
+            adjustLeft(speed, .2, brick);
+            adjustRight(speed, 0.2, brick);
+            
+            disp("left");
+        end
+   
 
     hasRight = 0;
     % drift end
@@ -140,14 +141,16 @@ end
 function colors(color_rgb, brick, minRed, minGreen, minBlue)
     if(color_rgb(1,1) >= minRed)
         stopAndThink(1, brick);
+        disp("red");
     end
-    if(color_rgb(1,2) >= minGreen && color_rgb(1,3) < minBlue)
+    if(color_rgb(1,2) >= minGreen && color_rgb(1,3) < minBlue && color_rgb(1,1) < minRed)
         brick.StopAllMotors();
         for i=1:3
             brick.beep();
             pause(.2);
         end
         pause(1);
+        disp("green");
         keyboardMovement;
         
     end
@@ -161,6 +164,7 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
             pause(0.2);
         end
         pause(1);
+        disp("blue");
         keyboardMovement;
     end
     
