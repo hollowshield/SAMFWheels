@@ -47,20 +47,7 @@ while true
         
         disp("left");
     end
-    % if (distance >= 30)
-    %     forward(brick,-speed,-speed);
-    %     pause(.5)
-    %     forward(brick,speed,speed-14);
-    %     disp("right strong");
-    % end
-    % if ( distance <= 10)
-    %     forward(brick,-speed,-speed);
-    %     stopAndThink(2)
-    %     forward(brick,speed-5,speed);
-    %     pause(3)
-    %     disp("left strong");
-    % 
-    % end
+
     hasRight = 0;
     % drift end
     if (pressed == 1)
@@ -120,7 +107,7 @@ end
 
 
 function adjustLeft(speed, time, brick)
-    stopAndThink(1, brick);
+    stopAndThink(.5, brick);
 
     forward(brick,-speed+1,-speed-1);
 
@@ -136,7 +123,7 @@ function adjustLeft(speed, time, brick)
 end
 
 function adjustRight(speed, time, brick)
-    stopAndThink(1, brick);
+    stopAndThink(.5, brick);
 
     forward(brick,-speed+1,-speed-1);
 
@@ -161,8 +148,10 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
             pause(.2);
         end
         pause(1);
+        keyboardMovement;
         
     end
+    
     if(color_rgb(1,3) >= minBlue)
         
         brick.StopAllMotors();
@@ -172,6 +161,7 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
             pause(0.2);
         end
         pause(1);
+        keyboardMovement;
     end
     
 end
