@@ -3,7 +3,7 @@ InitKeyboard();
 hasRight = 0;
 speed = 50;
 brick.SetColorMode(3, 4);
-minGreen = 92;
+minGreen = 80;
 minRed = 100;
 minBlue = 100;
 
@@ -154,7 +154,7 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
     if(color_rgb(1,1) >= minRed)
         stopAndThink(1, brick);
     end
-    if(color_rgb(1,2) >= minGreen)
+    if(color_rgb(1,2) >= minGreen && color_rgb(1,3) < minBlue)
         brick.StopAllMotors();
         for i=1:3
             brick.beep();
@@ -173,6 +173,7 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
         end
         pause(1);
     end
+    
 end
 
 
