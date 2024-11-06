@@ -17,13 +17,18 @@ while true
         case 'downarrow'
             brick.MoveMotor('D', -speed);
             brick.MoveMotor('A', -speed);
-            
+
+        case 'w'
+            brick.MoveMotor('C', speed);
+
+        case 's'
+            brick.MoveMotor('C', -speed);
+
         case  0
             brick.StopMotor('D');
-            brick.StopMotor('A'); 
+            brick.StopMotor('A');
         case 'q'
             AutomaticMovement;
             break;
     end
 end
-
