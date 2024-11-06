@@ -9,64 +9,67 @@ minBlue = 100;
 
 
 while true
-
-   distance = brick.UltrasonicDist(2);
-   color_rgb = brick.ColorRGB(3);
-   colors(color_rgb, brick, minRed, minGreen, minBlue);
-
-   % move right  
-   if (distance >= 60 && hasRight==0)
+    if(color_rgb(1,1) >= minRed)
+        stopAndThink(1, brick);
+        continue
+    else
+       distance = brick.UltrasonicDist(2);
+       color_rgb = brick.ColorRGB(3);
+       colors(color_rgb, brick, minRed, minGreen, minBlue);
+    
+       % move right  
+       if (distance >= 60 && hasRight==0)
+                    
                 
+            rightTurn(brick,speed);
             
-        rightTurn(brick,speed);
+            forward(brick,speed,speed);
+            pause(2.1);
+            hasRight = 1;
+                
+               
+       end
+       
+    
+        pressed = brick.TouchPressed(1);
         
-        forward(brick,speed,speed);
-        pause(2.1);
-        hasRight = 1;
-            
-           
-   end
-   
-
-    pressed = brick.TouchPressed(1);
+        
+        % drift 
+            if (distance >15 && distance < 50)
+                colors(color_rgb, brick, minRed, minGreen, minBlue);
+                adjustRight(speed, 0.2, brick);
+                adjustLeft(speed, .2, brick);
+                
+                disp("right");
+                
+            end
+            if (distance <= 15)
+                colors(color_rgb, brick, minRed, minGreen, minBlue);
+                adjustLeft(speed, .2, brick);
+                adjustRight(speed, 0.2, brick);
+                
+                disp("left");
+            end
+       
     
-    
-    % drift 
-        if (distance >15 && distance < 50)
-            colors(color_rgb, brick, minRed, minGreen, minBlue);
-            adjustRight(speed, 0.2, brick);
-            adjustLeft(speed, .2, brick);
-            
-            disp("right");
-            
-        end
-        if (distance <= 15)
-            colors(color_rgb, brick, minRed, minGreen, minBlue);
-            adjustLeft(speed, .2, brick);
-            adjustRight(speed, 0.2, brick);
-            
-            disp("left");
-        end
-   
-
-    hasRight = 0;
-    % drift end
-    if (pressed == 1)
-        leftTurn(brick,speed);
-        disp(pressed);
-    end
-
-    
-
-
-    if key == 'q'
-            brick.StopAllMotors();
+        hasRight = 0;
+        % drift end
+        if (pressed == 1)
+            leftTurn(brick,speed);
             disp(pressed);
-            disp(distance);
-
-            break;
+        end
+    
         
+    
+    
+        if key == 'q'
+                brick.StopAllMotors();
+                disp(pressed);
+                disp(distance);
+    
+                break;
             
+        end     
     end
 end
 
