@@ -9,9 +9,10 @@ minBlue = 100;
 
 
 while true
+    color_rgb = brick.ColorRGB(3);
     if(color_rgb(1,1) >= minRed)
         stopAndThink(1, brick);
-        continue
+        
     else
        distance = brick.UltrasonicDist(2);
        color_rgb = brick.ColorRGB(3);
@@ -33,31 +34,33 @@ while true
     
         pressed = brick.TouchPressed(1);
         
+        if (pressed == 1)
+            leftTurn(brick,speed);
+            disp(pressed);
+        end
         
         % drift 
-            if (distance >15 && distance < 50)
+            if (distance >13 && distance < 50)
                 colors(color_rgb, brick, minRed, minGreen, minBlue);
                 adjustRight(speed, 0.2, brick);
-                adjustLeft(speed, .2, brick);
-                
+                forward(brick, speed, speed+5)
+                distance = brick.UltrasonicDist(2)-5;
+                disp(distance);
                 disp("right");
                 
             end
-            if (distance <= 15)
+            if (distance <= 13)
                 colors(color_rgb, brick, minRed, minGreen, minBlue);
                 adjustLeft(speed, .2, brick);
-                adjustRight(speed, 0.2, brick);
-                
+                forward(brick, speed+5, speed)
+                distance = brick.UltrasonicDist(2)+5;
                 disp("left");
             end
        
     
         hasRight = 0;
         % drift end
-        if (pressed == 1)
-            leftTurn(brick,speed);
-            disp(pressed);
-        end
+        
     
         
     
