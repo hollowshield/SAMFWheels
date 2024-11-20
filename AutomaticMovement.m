@@ -10,7 +10,7 @@ minBlue = 100;
 
 while true
     color_rgb = brick.ColorRGB(3);
-    if(color_rgb(1,1) >= minRed)
+    if(false)
         stopAndThink(1, brick);
         
     else
@@ -38,24 +38,23 @@ while true
             leftTurn(brick,speed);
             disp(pressed);
         end
+        brick.MoveMotorAngleRel('A', 30, 90, 'Brake');
+        brick.MoveMotorAngleRel('D', 30, 90, 'Brake');
         
         % drift 
-            if (distance >13 && distance < 50)
-                colors(color_rgb, brick, minRed, minGreen, minBlue);
-                adjustRight(speed, 0.2, brick);
-                forward(brick, speed, speed+5)
-                distance = brick.UltrasonicDist(2)-5;
-                disp(distance);
-                disp("right");
+            %if (distance >13 && distance < 50)
+                %colors(color_rgb, brick, minRed, minGreen, minBlue);
+                %%adjustRight(speed, brick);
+                %adjustLeft(speed, brick);
+                %disp("right" + distance);
                 
-            end
-            if (distance <= 13)
-                colors(color_rgb, brick, minRed, minGreen, minBlue);
-                adjustLeft(speed, .2, brick);
-                forward(brick, speed+5, speed)
-                distance = brick.UltrasonicDist(2)+5;
-                disp("left");
-            end
+            %end
+            %if (distance <= 13)
+                %colors(color_rgb, brick, minRed, minGreen, minBlue);
+                %adjustLeft(speed,  brick);
+                %adjustRight(speed, brick);
+                %disp("left" + distance);
+            %end
        
     
         hasRight = 0;
@@ -113,43 +112,44 @@ function stopAndThink(time, brick)
 end
 
 
-function adjustLeft(speed, time, brick)
+function adjustLeft(speed, brick)
     stopAndThink(.5, brick);
 
-    forward(brick,-speed+1,-speed-1);
+    brick.MoveMotorAngleRel('A', 30, 90, 'Brake');
 
-    brick.MoveMotor('A', -speed);
-    brick.MoveMotor('D', speed);
-    pause(time);
+    %brick.MoveMotor('A', -speed);
+    %brick.MoveMotor('D', speed);
+    %pause(time);
 
     forward(brick, speed, speed);
     pause(1);
 
-    disp("left");
+    
         
 end
 
-function adjustRight(speed, time, brick)
+function adjustRight(speed, brick)
     stopAndThink(.5, brick);
 
-    forward(brick,-speed+1,-speed-1);
+    brick.MoveMotorAngleRel('D', 30, 90, 'Brake');
+    brick.WaitForMotor('D');
 
-    brick.MoveMotor('A', speed);
-    brick.MoveMotor('D', -speed);
-    pause(time);
+    %brick.MoveMotor('A', speed);
+    %brick.MoveMotor('D', -speed);
+    %pause(time);
     
-    forward(brick, speed, speed);
-    pause(1);
-    disp("right");
+    %forward(brick, speed, speed);
+    %pause(1);
+   
         
 end
 
 function colors(color_rgb, brick, minRed, minGreen, minBlue)
-    if(color_rgb(1,1) >= minRed)
+    if(false)
         stopAndThink(1, brick);
         disp("red");
     end
-    if(color_rgb(1,2) >= minGreen && color_rgb(1,3) < minBlue && color_rgb(1,1) < minRed)
+    if(color_rgb(1,2) >= 1000 && color_rgb(1,3) < minBlue && color_rgb(1,1) < minRed)
         brick.StopAllMotors();
         for i=1:3
             brick.beep();
@@ -161,7 +161,7 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
         
     end
     
-    if(color_rgb(1,3) >= minBlue)
+    if(color_rgb(1,3) >= 1000)
         
         brick.StopAllMotors();
         
@@ -173,7 +173,7 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
         disp("blue");
         keyboardMovement;
     end
-    if(color_rgb(1,2) >= minGreen && color_rgb(1,1) >= minRed)
+    if(color_rgb(1,2) >= minGreen && color_rgb(1,1) >= 1000)
         
         brick.StopAllMotors();
         
