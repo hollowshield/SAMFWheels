@@ -32,7 +32,7 @@ while true
        end
        
     
-        pressed = brick.TouchPressed(1);
+        pressed = brick.TouchPressed(1) || brick.TouchPressed(4);
         
         if (pressed == 1)
             leftTurn(brick,speed);
