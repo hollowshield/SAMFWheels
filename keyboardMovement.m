@@ -19,10 +19,10 @@ while true
             brick.MoveMotor('A', -speed);
 
         case 'w'
-            brick.MoveMotor('C', speed);
+            brick.MoveMotorAngleAbs('C', 20, 90, 'Brake'); 
 
         case 's'
-            brick.MoveMotor('C', -speed);
+            brick.MoveMotorAngleAbs('C', 20, -90, 'Brake'); 
 
         case  0
             brick.StopMotor('D');
