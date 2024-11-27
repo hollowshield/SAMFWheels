@@ -43,7 +43,7 @@ while true
             forward(brick, speed,speed)
         end 
         % drift 
-            if (distance >25 && distance < 50)
+            if (distance >30 && distance < 50)
                 colors(color_rgb, brick, minRed, minGreen, minBlue);
 
                 adjustRight(speed, brick);
@@ -55,7 +55,7 @@ while true
                 %disp("right" + distance);
                 
             end
-            if (distance <= 20)
+            if (distance <= 15)
                 colors(color_rgb, brick, minRed, minGreen, minBlue);
 
                 
@@ -168,7 +168,7 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
         
     end
     
-    if(color_rgb(1,3) >= minBlue)
+    if(color_rgb(1,3) >= minBlue && color_rgb(1,3) <= 255)
         
         brick.StopAllMotors();
         
@@ -180,7 +180,7 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
         disp("blue");
         keyboardMovement;
     end
-    if(color_rgb(1,2) >= minGreen && color_rgb(1,1) >= minRed)
+    if(color_rgb(1,2) >= minGreen && color_rgb(1,1) >= minRed && color_rgb(1,2) <= 255)
         
         brick.StopAllMotors();
         
