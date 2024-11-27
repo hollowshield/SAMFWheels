@@ -12,7 +12,7 @@ while true
     color_rgb = brick.ColorRGB(3);
     if(false)
         stopAndThink(1, brick);
-        
+         
     else
        distance = brick.UltrasonicDist(2);
        color_rgb = brick.ColorRGB(3);
@@ -25,7 +25,7 @@ while true
             rightTurn(brick,speed);
             
             forward(brick,speed,speed);
-            pause(2.1);
+            pause(2.5);
             hasRight = 1;
                 
                
@@ -39,18 +39,18 @@ while true
             disp(pressed);
         end
         
-        if (distance >=20 && distance <= 25)
+        if (distance >=15 && distance <= 25)
             forward(brick, speed,speed)
         end 
         % drift 
-            if (distance >30 && distance < 50)
+            if (distance >25 && distance < 50)
                 colors(color_rgb, brick, minRed, minGreen, minBlue);
 
                 adjustRight(speed, brick);
 
-                brick.MoveMotorAngleRel('D', 100, 3*90, 'Brake');
                 
-                brick.WaitForMotor('D')
+                
+                
                 %adjustLeft(speed, brick);
                 %disp("right" + distance);
                 
@@ -61,9 +61,7 @@ while true
                 
                 adjustLeft(speed,  brick);
                 
-                brick.MoveMotorAngleRel('A', 100, 3*90, 'Brake');
-                
-                brick.WaitForMotor('A')
+               
 
             end
        
@@ -110,7 +108,7 @@ end
 function rightTurn(brick,speed)
         brick.MoveMotor('A', speed-10);
         brick.MoveMotor('D', -speed+10);
-        pause(1.05);
+        pause(1.0);
         
 
 
@@ -124,11 +122,9 @@ end
 
 
 function adjustLeft(speed, brick)
-    stopAndThink(.5, brick);
-
-    brick.MoveMotorAngleRel('D', 100, 3*90, 'Brake');
-    brick.WaitForMotor('D');
+    disp("left")
     
+    forward(brick, speed, speed+1);
     %pause(time);
 
     
@@ -136,23 +132,22 @@ function adjustLeft(speed, brick)
 end
 
 function adjustRight(speed, brick)
-    stopAndThink(.5, brick);
+    disp("right")
 
-    brick.MoveMotorAngleRel('A', 100,3* 90, 'Brake');
-    brick.WaitForMotor('A');
+     forward(brick, speed+5, speed);
 
     %brick.MoveMotor('A', speed);
     %brick.MoveMotor('D', -speed);
     %pause(time);
     
-    %forward(brick, speed, speed);
+   
     %pause(1);
    
         
 end
 
 function colors(color_rgb, brick, minRed, minGreen, minBlue)
-    if(color_rgb(1,1) > minRed)
+    if(color_rgb(1,1) > minRed && color_rgb(1,1) <= 255)
         stopAndThink(1, brick);
         disp("red");
     end
