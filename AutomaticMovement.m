@@ -25,7 +25,7 @@ while true
             rightTurn(brick,speed);
             
             forward(brick,speed,speed);
-            pause(2.5);
+            pause(2.0);
             hasRight = 1;
                 
                
@@ -108,7 +108,7 @@ end
 function rightTurn(brick,speed)
         brick.MoveMotor('A', speed-10);
         brick.MoveMotor('D', -speed+10);
-        pause(1.0);
+        pause(.87);
         
 
 
