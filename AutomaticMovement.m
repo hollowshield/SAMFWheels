@@ -10,9 +10,9 @@ minBlue = 100;
 
 while true
     color_rgb = brick.ColorRGB(3);
-    if(false)
-        stopAndThink(1, brick);
-         
+    if(color_rgb(1,1) > minRed && color_rgb(1,1) <= 255)
+        colors(color_rgb, brick, minRed, minGreen, minBlue)
+        
     else
        distance = brick.UltrasonicDist(2);
        color_rgb = brick.ColorRGB(3);
@@ -25,7 +25,11 @@ while true
             rightTurn(brick,speed);
             
             forward(brick,speed,speed);
-            pause(2.0);
+            pause(.5);
+            stopAndThink(1,brick);
+            forward(brick,speed,speed);
+            pause(1.5);
+            
             hasRight = 1;
                 
                
@@ -39,11 +43,11 @@ while true
             disp(pressed);
         end
         
-        if (distance >=15 && distance <= 25)
+        if (distance >=15 && distance <= 20)
             forward(brick, speed,speed)
         end 
         % drift 
-            if (distance >25 && distance < 50)
+            if (distance >20 && distance < 50)
                 colors(color_rgb, brick, minRed, minGreen, minBlue);
 
                 adjustRight(speed, brick);
@@ -124,7 +128,7 @@ end
 function adjustLeft(speed, brick)
     disp("left")
     
-    forward(brick, speed, speed+1);
+    forward(brick, speed, speed+2);
     %pause(time);
 
     
@@ -150,6 +154,9 @@ function colors(color_rgb, brick, minRed, minGreen, minBlue)
     if(color_rgb(1,1) > minRed && color_rgb(1,1) <= 255)
         stopAndThink(1, brick);
         disp("red");
+        forward(brick, 50,50)
+        pause(.5)
+
     end
     if(color_rgb(1,2) >= minGreen && color_rgb(1,3) < minBlue && color_rgb(1,1) < minRed)
         brick.StopAllMotors();
