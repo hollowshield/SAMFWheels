@@ -13,7 +13,6 @@ while true
         case 'rightarrow'
             brick.MoveMotor('A', speed);
             brick.MoveMotor('D',-speed);
-
         case 'downarrow'
             brick.MoveMotor('D', -speed);
             brick.MoveMotor('A', -speed);
@@ -29,6 +28,8 @@ while true
             brick.StopMotor('A');
         case 'q'
             AutomaticMovement;
+            break;
+        case 'p'
             break;
     end
 end
